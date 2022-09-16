@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity KemrMedicalBill.
+    -->
+    <changeSet id="20220831090427-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="kemr_patient_id"
+                                 baseTableName="kemr_medical_bill"
+                                 constraintName="fk_kemr_medical_bill__kemr_patient_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="kemr_patient"/>
+    </changeSet>
+</databaseChangeLog>

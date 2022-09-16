@@ -1,0 +1,115 @@
+entity KemrInstitution //각 엔티티에는 No라는 BigInt, Primary, Auto_increment 속성의 항목이 있음		
+{
+	@id id Long,  //@id는 custom id
+	kemrInstitutionId String maxlength(20) required unique, //unique는 중복 안되는 값
+	kemrInstitutionPassword String maxlength(60) required, //bcrypt hash 저장용
+	kemrInstitutionName String maxlength(20) required, //required는 not null
+	kemrInstitutionDepartment String maxlength(10), // 변경시 jhipster --incremental-changelog 로 활성화
+	kemrInstitutionPosition String maxlength(10), // jhipster jdl kemr_jdl.jdl --incremental-changelog --with-entities --force
+	kemrInstitutionManager String maxlength(20) required,
+	kemrInstitutionCellphone String maxlength(20) required,
+	kemrInstitutionEmail String maxlength(40) required,
+	kemrInstitutionWebsite String maxlength(40),
+	kemrInstitutionAgree Instant required,
+	kemrInstitutionStatus String maxlength(1) required,
+	kemrInstitutionModification Instant, 
+	kemrInstitutionWithdrawal Instant,
+	kemrInstitutionLandline String maxlength(20),
+	kemrInstitutionFail Integer, //int는 zerofill이 아닌 이상 길이 값은 의미 없음
+	kemrInstitutionFailtime Instant, //jdl은 디폴트 값이 없음
+	kemrInstitutionNumber String maxlength(10)
+}
+
+entity KemrPatient
+{
+	@id id Long,
+	kemrPatientName String maxlength(10) required,
+	kemrPatientSex String maxlength(1) required,
+	kemrPatientBirthday LocalDate required,
+	kemrPatientRegistrationDate Instant required,
+	kemrPatientSocialSeurityNo String maxlength(20) required,
+	kemrPatientQualificationCheck String maxlength(1) required, 
+	kemrPatientAddress String maxlength(50),
+	kemrPatientNurseMemo String maxlength(50),
+	kemrPatientRegistrationDate Instant required,
+	kemrPatientCellphone String maxlength(20),
+	kemrPatientLandline String maxlength(20),
+}
+
+entity KemrMedicalTreatment	{
+	@id id Long,
+	kemrMedicalTreatmentDoctorNote String maxlength(200),
+	//kemrMedicalTreatmentField String maxlength(20),
+	kemrMedicalTreatmentNurseMessage String maxlength(50),
+	kemrMedicalTreatmentDate Instant
+}			
+
+entity KemrMedicalBill {
+	@id id Long,
+	kemrMedicalBillTotal Integer required,
+	kemrMedicalBillNhsShare Integer required,
+	kemrMedicalBillPatientShare Integer required,
+	kemrMedicalBillMethod String maxlength(1) required,
+	kemrMedicalBillDeliveryType String maxlength(1) required,
+	kemrMedicalBillCashReceipt String maxlength(20) required
+}
+
+entity KemrPrescription	{
+	@id id Long,
+
+}
+
+entity KemrMedicine					
+{
+	@id id Long,
+	kemrMedicineName String maxlength(50) required,
+	kemrMedicinePrice Integer required
+}
+
+entity KemrDoctor				
+{
+	@id id Long,
+	kemrDoctorName String maxlength(20) required,
+	kemrDoctorField String maxlength(20) required
+}
+
+entity KemrDiagnosis				
+{
+	@id id Long,
+	kemrDiagnosisName String maxlength(50) required,
+}
+
+entity KemrTreatment									
+{
+	@id id Long,
+	kemrTreatmentName String maxlength(50) required,
+}
+
+entity KemrReservation
+{
+	@id id Long,
+	kemrReservationStatus String maxlength(1) required,
+	kemrReservationNewPatientName String maxlength(20),
+	kemrReservationNewPatientPhone String maxlength(20),
+	kemrReservationDate Instant required,
+	kemrReservationTime Integer required
+}
+
+relationship ManyToOne {
+	KemrMedicalTreatment{kemrPatient} to KemrPatient
+	KemrMedicalTreatment{kemrDoctor} to KemrDoctor
+	KemrMedicalTreatment{kemrDiagnosis} to KemrDiagnosis
+	KemrMedicalTreatment{kemrTreatment} to KemrTreatment
+	//KemrMedicalTreatment{kemrPrescription} to KemrPrescription
+
+	//KemrMedicalBill{kemrPatient} to KemrPatient
+	KemrMedicalBill{kemrMedicalTreatment} to KemrMedicalTreatment
+
+	//KemrPrescription{kemrPatient} to KemrPatient
+	KemrPrescription{kemrMedicine} to KemrMedicine
+	KemrPrescription{kemrMedicalTreatment} to KemrMedicalTreatment
+
+	KemrReservation{kemrPatient} to KemrPatient
+	KemrReservation{kemrDoctor} to KemrDoctor
+}
+

@@ -1,0 +1,63 @@
+{
+  "applications": "*",
+  "changelogDate": "20220831090433",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "kemr_reservation",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long",
+      "options": {
+        "id": true
+      }
+    },
+    {
+      "fieldName": "kemrReservationStatus",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength", "required"],
+      "fieldValidateRulesMaxlength": "1"
+    },
+    {
+      "fieldName": "kemrReservationNewPatientName",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "20"
+    },
+    {
+      "fieldName": "kemrReservationNewPatientPhone",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "20"
+    },
+    {
+      "fieldName": "kemrReservationDate",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "kemrReservationTime",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "incrementalChangelog": true,
+  "jpaMetamodelFiltering": false,
+  "name": "KemrReservation",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "kemrPatient",
+      "relationshipName": "kemrPatient",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "kemrDoctor",
+      "relationshipName": "kemrDoctor",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added relationships to the entity KemrPrescription.
+    -->
+    <changeSet id="20220913052231-1-add-relationships" author="jhipster">
+        <addColumn tableName="kemr_prescription">
+                <column name="kemr_medical_treatment_id" type="bigint"/>
+        </addColumn>
+        
+    </changeSet>
+
+    <!--
+        Dropped relationships to the entity KemrPrescription.
+    -->
+    <changeSet id="20220913052231-1-drop-relationships" author="jhipster">
+        <dropForeignKeyConstraint baseTableName="kemr_prescription" constraintName="fk_kemr_prescription__kemr_patient_id"/>
+        <dropColumn tableName="kemr_prescription">
+            <column name="kemr_patient_id"/>
+        </dropColumn>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+
+</databaseChangeLog>

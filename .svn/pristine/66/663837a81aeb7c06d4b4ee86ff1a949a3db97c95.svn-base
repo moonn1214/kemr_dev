@@ -1,0 +1,30 @@
+{
+  "applications": "*",
+  "changelogDate": "20220831090431",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "kemr_diagnosis",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long",
+      "options": {
+        "id": true
+      }
+    },
+    {
+      "fieldName": "kemrDiagnosisName",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength", "required"],
+      "fieldValidateRulesMaxlength": "50"
+    }
+  ],
+  "fluentMethods": true,
+  "incrementalChangelog": true,
+  "jpaMetamodelFiltering": false,
+  "name": "KemrDiagnosis",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

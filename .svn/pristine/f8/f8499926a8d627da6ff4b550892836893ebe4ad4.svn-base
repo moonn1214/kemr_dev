@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity KemrMedicalTreatment.
+    -->
+    <changeSet id="20220831090426-1" author="jhipster">
+        <createTable tableName="kemr_medical_treatment">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="kemr_medical_treatment_doctor_note" type="varchar(200)">
+                <constraints nullable="true" />
+            </column>
+            <column name="kemr_medical_treatment_field" type="varchar(20)">
+                <constraints nullable="true" />
+            </column>
+            <column name="kemrkemr_medical_treatment_nurse_message" type="varchar(50)">
+                <constraints nullable="true" />
+            </column>
+            <column name="kemr_patient_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="kemr_docter_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="kemr_diagnosis_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="kemr_treatment_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="kemr_prescription_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+
+    <!--
+        Load sample data generated with Faker.js
+        - This data can be easily edited using a CSV editor (or even MS Excel) and
+          is located in the 'src/main/resources/config/liquibase/fake-data' directory
+        - By default this data is applied when running with the JHipster 'dev' profile.
+          This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
+          Spring Boot configuration key.
+    -->
+    <changeSet id="20220831090426-1-data" author="jhipster" context="faker">
+        <loadData
+                  file="config/liquibase/fake-data/20220831090426_entity_kemr_medical_treatment.csv"
+                  separator=";"
+                  tableName="kemr_medical_treatment"
+                  usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="kemr_medical_treatment_doctor_note" type="string"/>
+            <column name="kemr_medical_treatment_field" type="string"/>
+            <column name="kemrkemr_medical_treatment_nurse_message" type="string"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

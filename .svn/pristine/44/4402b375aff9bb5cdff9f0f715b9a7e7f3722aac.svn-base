@@ -1,0 +1,61 @@
+{
+  "applications": "*",
+  "changelogDate": "20220831090426",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "kemr_medical_treatment",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long",
+      "options": {
+        "id": true
+      }
+    },
+    {
+      "fieldName": "kemrMedicalTreatmentDoctorNote",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "200"
+    },
+    {
+      "fieldName": "kemrMedicalTreatmentNurseMessage",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "50"
+    },
+    {
+      "fieldName": "kemrMedicalTreatmentDate",
+      "fieldType": "Instant"
+    }
+  ],
+  "fluentMethods": true,
+  "incrementalChangelog": true,
+  "jpaMetamodelFiltering": false,
+  "name": "KemrMedicalTreatment",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "kemrPatient",
+      "relationshipName": "kemrPatient",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "kemrDoctor",
+      "relationshipName": "kemrDoctor",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "kemrDiagnosis",
+      "relationshipName": "kemrDiagnosis",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "kemrTreatment",
+      "relationshipName": "kemrTreatment",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

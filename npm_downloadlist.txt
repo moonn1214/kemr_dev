@@ -1,0 +1,21 @@
+* -g 요구하는거 말고는 package.json을 업데이트 했을 시 npm install로 설치 가능
+
+npm install --save react-helmet
+-> script 태그 사용 가능 ! 
+
+npm install express@4
+
+
+https://socket.io/get-started/chat
+npm install socket.io
+
+
+
+https://localtunnel.github.io/www/
+npm install -g localtunnel
+lt --port 번호   ex)lt --port 5000
+
+https://www.npmjs.com/package/nodemon
+npm install -g nodemon 
+
+npm install react-bootstrap bootstrap

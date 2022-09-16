@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <property name="now" value="now()" dbms="mysql"/>
+    <property name="floatType" value="float" dbms="mysql"/>
+    <property name="clobType" value="clob" dbms="mysql"/>
+    <property name="blobType" value="longblob" dbms="mysql"/>
+    <property name="uuidType" value="varchar(36)" dbms="mysql"/>
+    <property name="datetimeType" value="datetime(6)" dbms="mysql"/>
+
+    <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220831090424_added_entity_KemrInstitution.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220831090425_added_entity_KemrPatient.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220831090426_added_entity_KemrMedicalTreatment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220831090427_added_entity_KemrMedicalBill.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220831090428_added_entity_KemrPrescription.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220831090429_added_entity_KemrMedicine.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220831090430_added_entity_KemrDoctor.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220831090431_added_entity_KemrDiagnosis.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220831090432_added_entity_KemrTreatment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220831090433_added_entity_KemrReservation.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20220831090426_added_entity_constraints_KemrMedicalTreatment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220831090427_added_entity_constraints_KemrMedicalBill.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220831090428_added_entity_constraints_KemrPrescription.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220831090433_added_entity_constraints_KemrReservation.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+    <include file="config/liquibase/changelog/20220902033445_updated_entity_KemrMedicalTreatment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220902033445_updated_entity_migrate_KemrMedicalTreatment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220902033446_updated_entity_KemrMedicalTreatment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220902033446_updated_entity_migrate_KemrMedicalTreatment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220902033446_updated_entity_constraints_KemrMedicalTreatment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220913041656_updated_entity_KemrMedicalTreatment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220913041656_updated_entity_migrate_KemrMedicalTreatment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220913052230_updated_entity_KemrMedicalTreatment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220913052231_updated_entity_KemrPrescription.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220913052231_updated_entity_migrate_KemrPrescription.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220913052231_updated_entity_constraints_KemrPrescription.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220915015651_updated_entity_KemrMedicalBill.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220915015651_updated_entity_migrate_KemrMedicalBill.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220915015651_updated_entity_constraints_KemrMedicalBill.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
+</databaseChangeLog>

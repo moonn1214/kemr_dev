@@ -1,0 +1,63 @@
+{
+  "applications": "*",
+  "changelogDate": "20220831090427",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "kemr_medical_bill",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long",
+      "options": {
+        "id": true
+      }
+    },
+    {
+      "fieldName": "kemrMedicalBillTotal",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "kemrMedicalBillNhsShare",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "kemrMedicalBillPatientShare",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "kemrMedicalBillMethod",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength", "required"],
+      "fieldValidateRulesMaxlength": "1"
+    },
+    {
+      "fieldName": "kemrMedicalBillDeliveryType",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength", "required"],
+      "fieldValidateRulesMaxlength": "1"
+    },
+    {
+      "fieldName": "kemrMedicalBillCashReceipt",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength", "required"],
+      "fieldValidateRulesMaxlength": "20"
+    }
+  ],
+  "fluentMethods": true,
+  "incrementalChangelog": true,
+  "jpaMetamodelFiltering": false,
+  "name": "KemrMedicalBill",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "kemrMedicalTreatment",
+      "relationshipName": "kemrMedicalTreatment",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}
