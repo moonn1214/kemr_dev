@@ -25,12 +25,10 @@ export const BillPage = () => {
   const setCashReceiptButton = (value) => {
     (value === '현금') ? (
       setCashReceiptButtonActivated(false), 
-      setCardButtonActivated(true),
-      setCashButtonValue('취소')
+      setCashReceiptButtonValue('취소')
     ) : (
       setCashReceiptButtonActivated(true), 
-      setCardButtonActivated(false),
-      setCashButtonValue('현금')
+      setCashReceiptButtonValue('현금')
     )
   };
 
@@ -44,7 +42,6 @@ export const BillPage = () => {
     setReceiveMethod('');
     setCashField('');
     setCardField('');
-    setCashReceiptButton('취소');
   };
   
   useEffect(() => {
@@ -82,17 +79,10 @@ export const BillPage = () => {
   const [patientAddressValue, setPatientAddressValue] = useState('');
 
   // 현금 결제 버튼 상태
-  const [cashButtonValue, setCashButtonValue] = useState('현금');
-  const [cashButtonActivated, setCashButtonActivated] = useState(true);
-
-  // 현금 영수증 발행 버튼 상태
   const [cashReceiptButtonActivated, setCashReceiptButtonActivated] = useState(true);
+  const [cashReceiptButtonValue, setCashReceiptButtonValue] = useState('현금');
   // 현금 영수증 모달 상태
   const [showReceiptModal, setShowReceiptModal] = useState(false);
-
-  // 카드 결제 버튼 상태
-  const[cardButtonActivated, setCardButtonActivated] = useState(true);
-
   // 현금 + 카드 결제 필드 값 상태 및 버튼 상태
   const [cashField, setCashField] = useState('');
   const [cardField, setCardField] = useState('');
@@ -104,20 +94,13 @@ export const BillPage = () => {
 
   // 현금 + 카드 입력값 상태에 따라 버튼 활성 상태 변경
   useEffect(() => {
-    if (cashField !== '' && cardField !== '' && kemrPatientEntity) setCashPlusCardButtonActivated(false);
+    if (cashField !== '' && cardField !== '') setCashPlusCardButtonActivated(false);
     else setCashPlusCardButtonActivated(true);
   }, [cashField, cardField]);
 
-  // 진료내역이 변경되면 값 초기화, 진료내역 선택 있으면 버튼 활성화
+  // 진료내역이 변경되면 값 초기화
   useEffect(() => {
     setDefault();
-    if (id !== undefined) {
-      setCashButtonActivated(false);
-      setCardButtonActivated(false);
-    } else {
-      setCashButtonActivated(true);
-      setCardButtonActivated(true);
-    }
   }, [id]);
 
   return (
@@ -287,9 +270,9 @@ export const BillPage = () => {
       &nbsp;
       <Row className="justify-content-center">
         <Col md="8">
-          <Button color="info" id="entity" data-cy="Button" type="button" disabled={cashButtonActivated} onClick={() => setCashReceiptButton(cashButtonValue)}>
+          <Button color="info" id="entity" data-cy="Button" type="button" onClick={() => setCashReceiptButton(cashReceiptButtonValue)}>
             {/* 현금 */}
-            {cashButtonValue}
+            {cashReceiptButtonValue}
           </Button>
           &nbsp;
           <Button color="info" id="entity" data-cy="Button" type="button" disabled={cashReceiptButtonActivated} onClick={() => setShowReceiptModal(true)}>
@@ -300,7 +283,7 @@ export const BillPage = () => {
       &nbsp;
       <Row className="justify-content-center">
         <Col md="8">
-          <Button color="info" id="entity" data-cy="Button" type="button" disabled={cardButtonActivated}>
+          <Button color="info" id="entity" data-cy="Button" type="button" disabled={!cashReceiptButtonActivated}>
             카드
           </Button>
         </Col>

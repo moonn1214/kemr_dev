@@ -51,13 +51,10 @@ export const BillWaitingComponent = () => {
                 </thead>
                 <tbody>
                   {kemrMedicalTreatments
-                    .filter(kemrMedicalTreatment => (
+                    .filter(kemrMedicalTreatment => ( 
                       kemrMedicalTreatment.kemrDiagnosis !== null && 
-                      kemrMedicalTreatment.kemrTreatment !== null
-                    ))
-                    .filter(kemrMedicalTreatment => (
-                      (kemrMedicalBills
-                        .filter(kemrMedicalBill => (kemrMedicalBill.kemrMedicalTreatment.id === kemrMedicalTreatment.id)).length) === 0
+                      kemrMedicalTreatment.kemrTreatment !== null &&
+                      kemrMedicalBills.filter(it => it.kemrMedicalTreatment.id === kemrMedicalTreatment.id).length === 0
                     ))
                     .map((kemrMedicalTreatment, i) => (
                       <tr key={`entity-${i}`} data-cy="entityTable">

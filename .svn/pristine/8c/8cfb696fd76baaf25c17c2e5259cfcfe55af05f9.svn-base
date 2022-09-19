@@ -81,13 +81,10 @@ export const WaitingComponent = (props: IWaitingProps) => {
     );
     setKemrBillWaitingNo(
       kemrMedicalTreatments
-      .filter(kemrMedicalTreatment => (
+      .filter(kemrMedicalTreatment => ( 
         kemrMedicalTreatment.kemrDiagnosis !== null && 
-        kemrMedicalTreatment.kemrTreatment !== null
-      ))
-      .filter(kemrMedicalTreatment => (
-        (kemrMedicalBills
-          .filter(kemrMedicalBill => (kemrMedicalBill.kemrMedicalTreatment.id === kemrMedicalTreatment.id)).length) === 0
+        kemrMedicalTreatment.kemrTreatment !== null &&
+        kemrMedicalBills.filter(it => it.kemrMedicalTreatment.id === kemrMedicalTreatment.id).length === 0
       )).length
     );
   }, [kemrMedicalTreatments]);
