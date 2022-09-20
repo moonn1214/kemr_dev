@@ -17,7 +17,7 @@ export interface IReceptModalProps {
   kemrDoctorId: string;
   confirmCancel: () => void;
   handleClose: () => void;
-};
+}
 
 const ReceptModal = (props: IReceptModalProps) => {
   const dispatch = useAppDispatch();
@@ -31,7 +31,7 @@ const ReceptModal = (props: IReceptModalProps) => {
       kemrPatient: kemrPatients.find(it => it.id.toString() === props.kemrPatientId.toString()),
       kemrMedicalTreatmentNurseMessage: props.kemrNurseMessage,
       kemrDoctor: kemrDoctors.find(it => it.id.toString() === props.kemrDoctorId.toString()),
-      kemrMedicalTreatmentDate: new Date(+new Date() + 3240 * 10000).toISOString().replace(/\..*/, '')+'Z',
+      kemrMedicalTreatmentDate: new Date().toISOString().replace(/\..*/, '') + 'Z',
     };
 
     props.confirmCancel();
@@ -56,7 +56,7 @@ const ReceptModal = (props: IReceptModalProps) => {
           &nbsp; 취소
         </Button>
         <Button id="jhi-confirm-delete-kemrPatient" data-cy="entityConfirmDeleteButton" color="primary" onClick={confirmRecept}>
-        <FontAwesomeIcon icon="save" />
+          <FontAwesomeIcon icon="save" />
           &nbsp; 확인
         </Button>
       </ModalFooter>

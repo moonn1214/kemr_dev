@@ -2,17 +2,23 @@
 //  * jkmoon
 //  * 원무-수납 대기 컴포넌트
 //  */
-import React, {  useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Row, Col, Table } from 'reactstrap';
+import { Button, Row, Col, Card, CardTitle, CardText } from 'reactstrap';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getEntities as getKemrPatients } from 'app/entities/kemr-patient/kemr-patient.reducer';
 import { getEntities as getKemrDoctors } from 'app/entities/kemr-doctor/kemr-doctor.reducer';
 // import { reset } from 'app/entities/kemr-medical-treatment/kemr-medical-treatment.reducer';
 import { getEntities as getKemrMedicalTreatments, getEntity } from 'app/entities/kemr-medical-treatment/kemr-medical-treatment.reducer';
 import { getEntities as getKemrMedicalBills } from 'app/entities/kemr-medical-bill/kemr-medical-bill.reducer';
+import { TextFormat } from 'react-jhipster';
+import { APP_KR_DATETIME_FORMAT } from 'app/config/constants';
 
-export const BillWaitingComponent = () => {
+export interface IBillWaitingComponentProps {
+  getOnlyAge: (birthday: any) => string;
+}
+
+export const BillWaitingComponent = (props: IBillWaitingComponentProps) => {
   const dispatch = useAppDispatch();
 
   const loading = useAppSelector(state => state.kemrMedicalTreatment.loading);
@@ -35,6 +41,52 @@ export const BillWaitingComponent = () => {
   return (
     <div>
       <Row className="justify-content-center">
+        <Col md="12">
+          {kemrMedicalTreatments && kemrMedicalTreatments.length > 0 ? (
+            kemrMedicalTreatments
+              .filter(kemrMedicalTreatment => (
+                kemrMedicalTreatment.kemrDiagnosis !== null && 
+                kemrMedicalTreatment.kemrTreatment !== null
+              ))
+              .filter(kemrMedicalTreatment => (
+                (kemrMedicalBills
+                  .filter(kemrMedicalBill => (kemrMedicalBill.kemrMedicalTreatment.id === kemrMedicalTreatment.id)).length) === 0
+              ))
+              .map((kemrMedicalTreatment, i) => (
+                <Card body key={`entity-${i}`}>
+                  <CardTitle>
+                    진료내역 {kemrMedicalTreatment.id}번
+                    &nbsp;
+                    <Button
+                      tag={Link}
+                      to={`/office/${kemrMedicalTreatment.id}/bill`}
+                      color="secondary"
+                      size="sm"
+                      data-cy="entityDetailsButton"
+                      onClick={() => setBillInfo(kemrMedicalTreatment.id)}
+                    >
+                      <span className="d-none d-md-inline">수납</span>
+                    </Button>
+                  </CardTitle>
+                  <CardText>
+                    {kemrMedicalTreatment.kemrPatient ? kemrMedicalTreatment.kemrPatient.kemrPatientName : ''}
+                    &nbsp;
+                    ({kemrMedicalTreatment.kemrPatient ? props.getOnlyAge(kemrMedicalTreatment.kemrPatient.kemrPatientBirthday) : ''}세)
+                    <br />
+                    {kemrMedicalTreatment.kemrDoctor ? kemrMedicalTreatment.kemrDoctor.kemrDoctorName : ''}
+                    <br />
+                    {kemrMedicalTreatment.kemrMedicalTreatmentDate ? (
+                      <TextFormat value={kemrMedicalTreatment.kemrMedicalTreatmentDate} type="date" format={APP_KR_DATETIME_FORMAT} />
+                    ) : null}
+                  </CardText>
+                </Card>
+              ))
+          ) : (
+            !loading && <div className="alert alert-warning">No Kemr Prescriptions found</div>
+          )}
+        </Col>
+      </Row>
+      {/* <Row className="justify-content-center">
         <Col md="8">
           <div className="table-responsive">
             {kemrMedicalTreatments && kemrMedicalTreatments.length > 0 ? (
@@ -90,7 +142,7 @@ export const BillWaitingComponent = () => {
             )}
           </div>
         </Col>
-      </Row>
+      </Row> */}
     </div>
   );
 };
