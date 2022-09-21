@@ -4,7 +4,7 @@
 //  */
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Button, Row, Col, DropdownItem } from 'reactstrap';
+import { Button, Row, Col, DropdownItem, ButtonDropdown, DropdownMenu, DropdownToggle, Card } from 'reactstrap';
 import { ValidatedField } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
@@ -71,6 +71,8 @@ export const ReceptPage = () => {
   const [cancelButtonActivated, setCancelButtonActivated] = useState(true);
   const [receptButtonActivated, setReceptButtonActivated] = useState(true);
 
+  const [showDoctorDropDown, setShowDoctorDropDown] = useState(false);
+
   // 모달 활성 상태
   const [showModal, setShowModal] = useState(false);
   const [showReceptModal, setReceptShowModal] = useState(false);
@@ -105,7 +107,7 @@ export const ReceptPage = () => {
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="jyemrApp.kemrMedicalTreatment.home.createOrEditLabel" data-cy="KemrMedicalTreatmentCreateUpdateHeading">
-            환자 접수
+            환자 정보
           </h2>
         </Col>
       </Row>
@@ -114,9 +116,6 @@ export const ReceptPage = () => {
         <Col md="8">
           <Row>
             <Col md="12">
-              <dt>
-                <span id="id">환자 정보</span>
-              </dt>
               <ValidatedField
                 id="kemr-medical-treatment-kemrPatient"
                 name="kemrPatient"
@@ -149,94 +148,106 @@ export const ReceptPage = () => {
                   </DropdownItem>
                 ))}
               </NavDropdown>
-              &nbsp;
-              <dt>
-                <span id="id">진료 정보</span>
-              </dt>
-              <ValidatedField
-                label="진료실 전달 메시지"
-                id="kemr-medical-treatment-kemrMedicalTreatmentNurseMessage"
-                name="kemrMedicalTreatmentNurseMessage"
-                data-cy="kemrMedicalTreatmentNurseMessage"
-                type="text"
-                validate={{
-                  required: { value: true, message: '필수항목입니다.' },
-                  maxLength: { value: 50, message: '최대 50자 이하까지만 입력 가능합니다.' },
-                }}
-                onChange={e => setKemrMedicalTreatmentNurseMessageField(e.target.value)}
-                value={kemrMedicalTreatmentNurseMessageField}
-              />
-              <ValidatedField
-                id="kemr-medical-treatment-kemrDoctor"
-                name="kemrDoctor"
-                data-cy="kemrDoctor"
-                label="진료실(담당의)"
-                type="text"
-                value={kemrDoctorEntity.kemrDoctorName}
-                validate={{
-                  required: { value: true, message: '필수항목입니다.' },
-                }}
-                readOnly
-              />
-              <NavDropdown
-                icon="th-list"
-                name="진료실(담당의) 선택"
-                id="entity-menu"
-                data-cy="entity"
-                style={{ maxHeight: '80vh', overflow: 'auto' }}
-              >
-                <option value="" key="0" />
-                {kemrDoctors.map(otherEntity => (
-                  <DropdownItem key={otherEntity.id}>
-                    <option
-                      onClick={() =>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+      &nbsp;
+      <hr />
+      &nbsp;
+      <Row className="justify-content-center">
+        <Col md="8">
+          <h2 id="jyemrApp.kemrMedicalTreatment.home.createOrEditLabel" data-cy="KemrMedicalTreatmentCreateUpdateHeading">
+            진료 정보
+          </h2>
+        </Col>
+      </Row>
+      <Row className="justify-content-center">
+        <Col md="8">
+          <Card>
+            <dt>
+              <span id="id">진료실</span>
+            </dt>
+            <Row>
+              <Col md="12">
+                <ButtonDropdown isOpen={showDoctorDropDown} toggle={() => setShowDoctorDropDown(!showDoctorDropDown)}>
+                  <DropdownToggle caret>
+                    {kemrDoctorEntity.kemrDoctorName ? kemrDoctorEntity.kemrDoctorName : "진료실 선택"}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {kemrDoctors.map(otherEntity => (
+                      <DropdownItem key={otherEntity.id} onClick={() =>
                         setKemrDoctorEntity({
                           ...kemrDoctorEntity,
                           id: otherEntity.id,
                           kemrDoctorName: otherEntity.kemrDoctorName,
                           kemrDoctorField: otherEntity.kemrDoctorField,
                         })
-                      }
-                    >
-                      {otherEntity.kemrDoctorName} / 분야-{otherEntity.kemrDoctorField}
-                    </option>
-                  </DropdownItem>
-                ))}
-              </NavDropdown>
-            </Col>
-          </Row>
-          &nbsp;
-          <Row className="justify-content-center">
-            <Col md="12">
-              <Button
-                id="cancel-write"
-                data-cy="entityWriteCancelButton"
-                color="danger"
-                type="button"
-                disabled={cancelButtonActivated}
-                onClick={handleReset}
-              >
-                <FontAwesomeIcon icon="cancel" />
-                &nbsp;
-                <span className="d-none d-md-inline">취소</span>
-              </Button>
-              &nbsp;
-              <Button
-                color="primary"
-                id="save-entity"
-                data-cy="entityCreateSaveButton"
-                type="button"
-                disabled={receptButtonActivated}
-                onClick={handleRecept}
-              >
-                <FontAwesomeIcon icon="save" />
-                &nbsp; 접수
-              </Button>
-            </Col>
-          </Row>
+                      }>
+                        {otherEntity.kemrDoctorName}
+                      </DropdownItem>
+                    ))}
+                  </DropdownMenu>
+                </ButtonDropdown>
+              </Col>
+            </Row>
+          </Card>
+          <Card>
+            <Row>
+              <Col md="12">
+                <dt>
+                  <span id="id">진료실 전달 메시지</span>
+                </dt>
+                <ValidatedField
+                  id="kemr-medical-treatment-kemrMedicalTreatmentNurseMessage"
+                  name="kemrMedicalTreatmentNurseMessage"
+                  data-cy="kemrMedicalTreatmentNurseMessage"
+                  type="text"
+                  validate={{
+                    required: { value: true, message: '필수항목입니다.' },
+                    maxLength: { value: 50, message: '최대 50자 이하까지만 입력 가능합니다.' },
+                  }}
+                  onChange={e => setKemrMedicalTreatmentNurseMessageField(e.target.value)}
+                  value={kemrMedicalTreatmentNurseMessageField}
+                />
+              </Col>
+            </Row>
+          </Card>
         </Col>
       </Row>
       &nbsp;
+      <hr />
+      &nbsp;
+      <Row className="justify-content-center">
+        <Col md="2">
+          <Button
+            id="cancel-write"
+            data-cy="entityWriteCancelButton"
+            color="danger"
+            type="button"
+            disabled={cancelButtonActivated}
+            onClick={handleReset}
+          >
+            <FontAwesomeIcon icon="cancel" />
+            &nbsp;
+            <span className="d-none d-md-inline">취소</span>
+          </Button>
+          &nbsp;
+          <Button
+            color="primary"
+            id="save-entity"
+            data-cy="entityCreateSaveButton"
+            type="button"
+            disabled={receptButtonActivated}
+            onClick={handleRecept}
+          >
+            <FontAwesomeIcon icon="save" />
+            &nbsp; 접수
+          </Button>
+        </Col>
+      </Row>
+      &nbsp;
+      <hr />
       {/* 대기 컴포넌트 호출 */}
       <WaitingComponent 
         waitingMode='diagnosisWaiting' 

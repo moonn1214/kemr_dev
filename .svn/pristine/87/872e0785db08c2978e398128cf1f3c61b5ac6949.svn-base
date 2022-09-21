@@ -69,12 +69,14 @@ export const WaitingComponent = (props: IWaitingProps) => {
       kemrMedicalTreatments
       .filter(kemrMedicalTreatment => (
         kemrMedicalTreatment.kemrDiagnosis !== null && 
-        kemrMedicalTreatment.kemrTreatment !== null &&
-        kemrMedicalBills
-        .filter(kemrMedicalBill => (kemrMedicalBill.kemrMedicalTreatment.id === kemrMedicalTreatment.id)).length === 0
+        kemrMedicalTreatment.kemrTreatment !== null
+      ))
+      .filter(kemrMedicalTreatment => (
+        (kemrMedicalBills
+          .filter(kemrMedicalBill => (kemrMedicalBill.kemrMedicalTreatment.id === kemrMedicalTreatment.id)).length) === 0
       )).length
     );
-  }, [kemrMedicalTreatments, kemrMedicalBills]);
+  }, [kemrMedicalTreatments]);
 
   return (
     <div>

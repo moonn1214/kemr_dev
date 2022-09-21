@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import React, { useEffect, useState } from 'react';
 import { TextFormat, ValidatedField } from 'react-jhipster';
 import { Link, useParams } from 'react-router-dom';
-import { Button, Col, DropdownItem, Row } from 'reactstrap';
+import { Button, Card, Col, DropdownItem, Row } from 'reactstrap';
 import {  getEntities as getKemrPatients } from 'app/entities/kemr-patient/kemr-patient.reducer';
 import { getEntities as getKemrDoctors } from 'app/entities/kemr-doctor/kemr-doctor.reducer';
 import { getEntities as getKemrPrescriptions } from 'app/entities/kemr-prescription/kemr-prescription.reducer';
@@ -22,29 +22,30 @@ export const BillPage = () => {
   const { id } = useParams<'id'>();
 
   // 현금 결제 버튼 활성 상태 설정
-  const setCashReceiptButton = (value) => {
-    (value === '현금') ? (
-      setCashReceiptButtonActivated(false), 
-      setCardButtonActivated(true),
-      setCashButtonValue('취소')
-    ) : (
-      setCashReceiptButtonActivated(true), 
-      setCardButtonActivated(false),
-      setCashButtonValue('현금')
-    )
-  };
+  // const setCashReceiptButton = (value) => {
+  //   (value === '현금') ? (
+  //     setCashReceiptButtonActivated(false), 
+  //     setCardButtonActivated(true),
+  //     setCashButtonValue('취소')
+  //   ) : (
+  //     setCashReceiptButtonActivated(true), 
+  //     setCardButtonActivated(false),
+  //     setCashButtonValue('현금')
+  //   )
+  // };
 
   // 현금 영수증 발행 모달 닫는 메소드
-  const handleClose = () => {
-    setShowReceiptModal(false);
-  };
+  // const handleClose = () => {
+  //   setShowReceiptModal(false);
+  // };
 
   // 직접 입력하는 영역의 값을 초기화하는 메소드
   const setDefault = () => {
     setReceiveMethod('');
-    setCashField('');
-    setCardField('');
-    setCashReceiptButton('취소');
+    checkCardRadio();
+    // setCashField('');
+    // setCardField('');
+    // setCashReceiptButton('취소');
   };
   
   useEffect(() => {
@@ -68,12 +69,12 @@ export const BillPage = () => {
 
   // 처방전 테이블에서 현재 진료내역의 id 값을 가진 정보들을 찾음
   const kemrMedicinesOfThis = kemrPrescriptions
-                                .filter(
-                                  kemrPrescription => kemrPrescription.kemrMedicalTreatment.id.toString() === kemrMedicalTreatmentEntity?.id?.toString()
-                                ).map(
-                                  // kemrPrescription => <>{kemrPrescription.kemrMedicine.kemrMedicineName}<br /></>
-                                  kemrPrescription => kemrPrescription.kemrMedicine.kemrMedicineName + ' '
-                                );
+                              .filter(
+                                kemrPrescription => kemrPrescription.kemrMedicalTreatment.id.toString() === kemrMedicalTreatmentEntity?.id?.toString()
+                              ).map(
+                                // kemrPrescription => <>{kemrPrescription.kemrMedicine.kemrMedicineName}<br /></>
+                                kemrPrescription => kemrPrescription.kemrMedicine.kemrMedicineName + ' '
+                              );
 
   // 첩약 수령 방법의 상태
   const [receiveMethod, setReceiveMethod] = useState('');
@@ -82,42 +83,158 @@ export const BillPage = () => {
   const [patientAddressValue, setPatientAddressValue] = useState('');
 
   // 현금 결제 버튼 상태
-  const [cashButtonValue, setCashButtonValue] = useState('현금');
-  const [cashButtonActivated, setCashButtonActivated] = useState(true);
+  // const [cashButtonValue, setCashButtonValue] = useState('현금');
+  // const [cashButtonActivated, setCashButtonActivated] = useState(true);
 
   // 현금 영수증 발행 버튼 상태
-  const [cashReceiptButtonActivated, setCashReceiptButtonActivated] = useState(true);
+  // const [cashReceiptButtonActivated, setCashReceiptButtonActivated] = useState(true);
   // 현금 영수증 모달 상태
-  const [showReceiptModal, setShowReceiptModal] = useState(false);
+  // const [showReceiptModal, setShowReceiptModal] = useState(false);
 
   // 카드 결제 버튼 상태
-  const[cardButtonActivated, setCardButtonActivated] = useState(true);
+  // const[cardButtonActivated, setCardButtonActivated] = useState(true);
 
   // 현금 + 카드 결제 필드 값 상태 및 버튼 상태
-  const [cashField, setCashField] = useState('');
-  const [cardField, setCardField] = useState('');
-  const [cashPlusCardButtonActivated, setCashPlusCardButtonActivated] = useState(true);
+  // const [cashField, setCashField] = useState('');
+  // const [cardField, setCardField] = useState('');
+  // const [cashPlusCardButtonActivated, setCashPlusCardButtonActivated] = useState(true);
+
+  // 첫번째 박스의 라디오 버튼 체크 상태
+  const [cardRadioChecked, setCardRadioChecked] = useState(true);
+  const [cashRadioChecked, setCashRadioChecked] = useState(false);
+  const [cardCashRadioChecked, setCardCashRadioChecked] = useState(false);
+
+  // 두번째 박스의 현금 영수증 라디오 버튼 활성 상태
+  const [cashReceiptRadioActivated, setCashReceiptRadioActivated] = useState(true);
+  const [cardCashReceiptRadioActivated, setCardCashReceiptRadioActivated] = useState(true);
+
+  // 두번째 박스의 라디오 버튼 체크 상태
+  const [cashReceiptRadioChecked, setCashReceiptRadioChecked] = useState(false);
+  const [cardCashRadioAutoChecked, setCardCashRadioAutoChecked] = useState(false);
+  const [cardCashReceiptRadioChecked, setCardcashReceiptRadioChecked] = useState(false);
+
+  // 두번째 박스의 입력란 활성 상태
+  const [cashPhoneActivated, setCashPhoneActivated] = useState(true);
+  const [cashActivated, setCashActivated] = useState(true);
+  const [cardCashPhoneActivated, setCardCashPhoneActivated] = useState(true);
+
+  // 두번째 박스의 입력 값 상태
+  const [cashPhone, setCashPhone] = useState('');
+  const [cash, setCash] = useState('');
+  const [cardCashPhone, setCardCashPhone] = useState('');
+
+  // 첫번째 박스의 카드 라디오 버튼 클릭 메소드
+  const checkCardRadio = () => {
+    setCardRadioChecked(true);
+    setCashRadioChecked(false);
+    setCardCashRadioChecked(false);
+
+    setCashReceiptRadioActivated(true);
+    setCardCashReceiptRadioActivated(true);
+
+    setCashReceiptRadioChecked(false);
+    setCardCashRadioAutoChecked(false);
+    setCardcashReceiptRadioChecked(false);
+
+    setCashPhoneActivated(true);
+    setCashActivated(true);
+    setCardCashPhoneActivated(true);
+
+    setCashPhone('');
+    setCash('');
+    setCardCashPhone('');
+  };
+
+  // 첫번째 박스의 현금 라디오 버튼 클릭 메소드
+  const checkCashRadio = () => {
+    setCardRadioChecked(false);
+    setCashRadioChecked(true);
+    setCardCashRadioChecked(false);
+
+    setCashReceiptRadioActivated(false);
+    setCardCashReceiptRadioActivated(true);
+    
+    setCashReceiptRadioChecked(false);
+    setCardCashRadioAutoChecked(false);
+    setCardcashReceiptRadioChecked(false);
+
+    setCashPhoneActivated(true);
+    setCashActivated(true);
+    setCardCashPhoneActivated(true);
+
+    setCashPhone('');
+    setCash('');
+    setCardCashPhone('');
+  };
+
+  // 첫번째 박스의 카드+현금 라디오 버튼 클릭 메소드
+  const checkCardCashRadio = () => {
+    setCardRadioChecked(false);
+    setCashRadioChecked(false);
+    setCardCashRadioChecked(true);
+
+    setCashReceiptRadioActivated(true);
+    setCardCashReceiptRadioActivated(false);
+
+    setCashReceiptRadioChecked(false);
+    setCardCashRadioAutoChecked(true);
+    setCardcashReceiptRadioChecked(false);
+
+    setCashPhoneActivated(true);
+    setCashActivated(true);
+    setCardCashPhoneActivated(true);
+
+    setCashPhone('');
+    setCash('');
+    setCardCashPhone('');
+  };
+
+  // 두번째 박스 현금 영수증 발행 라디오 버튼 클릭 메소드
+  const checkCashReceiptRadio = (activated) => {
+    setCashReceiptRadioChecked(!activated);
+
+    setCashPhoneActivated(activated);
+    setCashActivated(true);
+    setCardCashPhoneActivated(true);
+
+    setCashPhone('');
+    setCash('');
+    setCardCashPhone('');
+  };
+
+  // 두번째 박스 현금 금액 입력 및 현금 영수증 발행 라디오 버튼 클릭 메소드
+  const checkCardCashReceiptRadio = (activated) => {
+    setCardcashReceiptRadioChecked(!activated);
+
+    setCashPhoneActivated(true);
+    setCashActivated(activated);
+    setCardCashPhoneActivated(activated);
+
+    setCashPhone('');
+    setCash('');
+    setCardCashPhone('');
+  };
 
   // 취소 및 수납 버튼 상태
   const [cancelButtonActivated, setCancelButtonActivated] = useState(true);
   const [billButtonActivated, setBillButtonActivated] = useState(true);
 
   // 현금 + 카드 입력값 상태에 따라 버튼 활성 상태 변경
-  useEffect(() => {
-    if (cashField !== '' && cardField !== '' && kemrPatientEntity) setCashPlusCardButtonActivated(false);
-    else setCashPlusCardButtonActivated(true);
-  }, [cashField, cardField]);
+  // useEffect(() => {
+  //   if (cashField !== '' && cardField !== '' && kemrPatientEntity) setCashPlusCardButtonActivated(false);
+  //   else setCashPlusCardButtonActivated(true);
+  // }, [cashField, cardField]);
 
   // 진료내역이 변경되면 값 초기화, 진료내역 선택 있으면 버튼 활성화
   useEffect(() => {
     setDefault();
-    if (id !== undefined) {
-      setCashButtonActivated(false);
-      setCardButtonActivated(false);
-    } else {
-      setCashButtonActivated(true);
-      setCardButtonActivated(true);
-    }
+    // if (id !== undefined) {
+    //   setCashButtonActivated(false);
+    //   setCardButtonActivated(false);
+    // } else {
+    //   setCashButtonActivated(true);
+    //   setCardButtonActivated(true);
+    // }
   }, [id]);
 
   return (
@@ -176,6 +293,8 @@ export const BillPage = () => {
         </Col>
       </Row>
       &nbsp;
+      <hr />
+      &nbsp;
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="jyemrApp.kemrMedicalTreatment.home.createOrEditLabel" data-cy="KemrMedicalTreatmentCreateUpdateHeading">
@@ -210,6 +329,8 @@ export const BillPage = () => {
           </Row>
         </Col>
       </Row>
+      &nbsp;
+      <hr />
       &nbsp;
       <Row className="justify-content-center">
         <Col md="8">
@@ -277,6 +398,8 @@ export const BillPage = () => {
         </Col>
       </Row>
       &nbsp;
+      <hr />
+      &nbsp;
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="jyemrApp.kemrMedicalTreatment.home.createOrEditLabel" data-cy="KemrMedicalTreatmentCreateUpdateHeading">
@@ -284,11 +407,76 @@ export const BillPage = () => {
           </h2>
         </Col>
       </Row>
-      &nbsp;
+      <Row className="justify-content-center">
+        <Col md="8">
+          <Card>
+            <Row>
+              <Col md="12">
+                <input type="radio" checked={cardRadioChecked} onClick={checkCardRadio} readOnly /> 카드
+              </Col>
+              &nbsp;
+              <Col md="12">
+                <input type="radio" checked={cashRadioChecked} onClick={checkCashRadio} readOnly /> 현금
+              </Col>
+              &nbsp;
+              <Col md="12">
+                <input type="radio" checked={cardCashRadioChecked} onClick={checkCardCashRadio} readOnly /> 카드 + 현금
+              </Col>
+            </Row>
+          </Card>
+        </Col>
+        <Col md="8">
+          <Card>
+            <Row>
+              <Col md="12">
+                <input type="radio" disabled={cashReceiptRadioActivated} checked={cashReceiptRadioChecked} onClick={() => checkCashReceiptRadio(cashReceiptRadioChecked)} readOnly /> 현금 영수증 발행
+                <ValidatedField
+                  id="kemr-medical-bill-kemrMedicalBillMethod"
+                  name="kemrMedicalBillMethod"
+                  data-cy="kemrMedicalBillMethod"
+                  type="text"
+                  placeholder='휴대폰 번호 입력 ("-" 없이 입력)'
+                  disabled={cashPhoneActivated}
+                  onChange={e => setCashPhone(e.target.value)}
+                  value={cashPhone}
+                />
+              </Col>
+              &nbsp;
+              <Col md="12">
+                <input type="radio" disabled={!cardCashRadioAutoChecked} checked={cardCashRadioAutoChecked} readOnly /> 카드 + 현금
+              </Col>
+              <Col md="12">
+                <input type="radio" disabled={cardCashReceiptRadioActivated} checked={cardCashReceiptRadioChecked} onClick={() => checkCardCashReceiptRadio(cardCashReceiptRadioChecked)} readOnly /> 현금 금액 입력 및 현금 영수증 발행
+                <ValidatedField
+                  id="kemr-medical-bill-kemrMedicalBillMethod"
+                  name="kemrMedicalBillMethod"
+                  data-cy="kemrMedicalBillMethod"
+                  type="text"
+                  placeholder="현금 금액 입력"
+                  disabled={cashActivated}
+                  // 값 넘길 때 value.replace(',', '')
+                  onChange={e => setCash(e.target.value.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ','))}
+                  value={cash}
+                />
+                <ValidatedField
+                  id="kemr-medical-bill-kemrMedicalBillMethod"
+                  name="kemrMedicalBillMethod"
+                  data-cy="kemrMedicalBillMethod"
+                  type="text"
+                  placeholder='휴대폰 번호 입력 ("-" 없이 입력)'
+                  disabled={cardCashPhoneActivated}
+                  onChange={e => setCardCashPhone(e.target.value)}
+                  value={cardCashPhone}
+                />
+              </Col>
+            </Row>
+          </Card>
+        </Col>
+      </Row>
+      {/* &nbsp;
       <Row className="justify-content-center">
         <Col md="8">
           <Button color="info" id="entity" data-cy="Button" type="button" disabled={cashButtonActivated} onClick={() => setCashReceiptButton(cashButtonValue)}>
-            {/* 현금 */}
             {cashButtonValue}
           </Button>
           &nbsp;
@@ -356,8 +544,26 @@ export const BillPage = () => {
             &nbsp; 수납
           </Button>
         </Col>
+      </Row> */}
+      <hr />
+      &nbsp;
+      <Row className="justify-content-center">
+        <Col md="2">
+          <Button id="cancel-write" data-cy="entityWriteCancelButton" color="danger" type="button" disabled={cancelButtonActivated}>
+            <FontAwesomeIcon icon="cancel" />
+            &nbsp;
+            <span className="d-none d-md-inline">취소</span>
+          </Button>
+          &nbsp;
+          <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="button" disabled={billButtonActivated}>
+            <FontAwesomeIcon icon="save" />
+            &nbsp; 
+            <span className="d-none d-md-inline">수납</span>
+          </Button>
+        </Col>
       </Row>
       &nbsp;
+      <hr />
       {/* 대기 컴포넌트 호출 */}
       <WaitingComponent 
         waitingMode='billWaiting' 
@@ -367,12 +573,12 @@ export const BillPage = () => {
       />
 
       {/* 현금 영수증 발행 모달 컴포넌트 호출 */}
-      <BillReceiptModal 
+      {/* <BillReceiptModal 
         showModal={showReceiptModal}
         kemrPatientId={kemrPatientEntity?.id}
         kemrPatientCellphone={kemrPatientEntity?.kemrPatientCellphone}
         handleClose={handleClose}
-      />
+      /> */}
     </div>
   );
 };
