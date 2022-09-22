@@ -19,4 +19,5 @@ export const APP_TWO_DIGITS_AFTER_POINT_NUMBER_FORMAT = '0,0.[00]';
  */
 export const APP_TIME_FORMAT = 'HH:mm';
 export const APP_SHORT_DATE_FORMAT = 'YY.MM.DD';
+export const APP_KR_DATE_FORMAT = 'YYYY년 MM월 DD일';
 export const APP_KR_DATETIME_FORMAT = 'YYYY년 MM월 DD일 HH:mm';

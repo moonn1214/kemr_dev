@@ -13,39 +13,18 @@ import {  getEntities as getKemrPatients } from 'app/entities/kemr-patient/kemr-
 import { getEntities as getKemrDoctors } from 'app/entities/kemr-doctor/kemr-doctor.reducer';
 import { getEntities as getKemrPrescriptions } from 'app/entities/kemr-prescription/kemr-prescription.reducer';
 import { getEntity, reset } from 'app/entities/kemr-medical-treatment/kemr-medical-treatment.reducer';
-import BillReceiptModal from './bill-receipt-modal';
 import { NavDropdown } from 'app/shared/layout/menus/menu-components';
 import WaitingComponent from '../waiting/waiting';
+import PatientInfoComponent from '../patient-info/patient-info';
 
 export const BillPage = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams<'id'>();
 
-  // 현금 결제 버튼 활성 상태 설정
-  // const setCashReceiptButton = (value) => {
-  //   (value === '현금') ? (
-  //     setCashReceiptButtonActivated(false), 
-  //     setCardButtonActivated(true),
-  //     setCashButtonValue('취소')
-  //   ) : (
-  //     setCashReceiptButtonActivated(true), 
-  //     setCardButtonActivated(false),
-  //     setCashButtonValue('현금')
-  //   )
-  // };
-
-  // 현금 영수증 발행 모달 닫는 메소드
-  // const handleClose = () => {
-  //   setShowReceiptModal(false);
-  // };
-
-  // 직접 입력하는 영역의 값을 초기화하는 메소드
+  // 입력 값을 초기화하는 메소드
   const setDefault = () => {
     setReceiveMethod('');
     checkCardRadio();
-    // setCashField('');
-    // setCardField('');
-    // setCashReceiptButton('취소');
   };
   
   useEffect(() => {
@@ -72,7 +51,6 @@ export const BillPage = () => {
                               .filter(
                                 kemrPrescription => kemrPrescription.kemrMedicalTreatment.id.toString() === kemrMedicalTreatmentEntity?.id?.toString()
                               ).map(
-                                // kemrPrescription => <>{kemrPrescription.kemrMedicine.kemrMedicineName}<br /></>
                                 kemrPrescription => kemrPrescription.kemrMedicine.kemrMedicineName + ' '
                               );
 
@@ -81,23 +59,6 @@ export const BillPage = () => {
 
   // 주소 상태
   const [patientAddressValue, setPatientAddressValue] = useState('');
-
-  // 현금 결제 버튼 상태
-  // const [cashButtonValue, setCashButtonValue] = useState('현금');
-  // const [cashButtonActivated, setCashButtonActivated] = useState(true);
-
-  // 현금 영수증 발행 버튼 상태
-  // const [cashReceiptButtonActivated, setCashReceiptButtonActivated] = useState(true);
-  // 현금 영수증 모달 상태
-  // const [showReceiptModal, setShowReceiptModal] = useState(false);
-
-  // 카드 결제 버튼 상태
-  // const[cardButtonActivated, setCardButtonActivated] = useState(true);
-
-  // 현금 + 카드 결제 필드 값 상태 및 버튼 상태
-  // const [cashField, setCashField] = useState('');
-  // const [cardField, setCardField] = useState('');
-  // const [cashPlusCardButtonActivated, setCashPlusCardButtonActivated] = useState(true);
 
   // 첫번째 박스의 라디오 버튼 체크 상태
   const [cardRadioChecked, setCardRadioChecked] = useState(true);
@@ -219,22 +180,9 @@ export const BillPage = () => {
   const [cancelButtonActivated, setCancelButtonActivated] = useState(true);
   const [billButtonActivated, setBillButtonActivated] = useState(true);
 
-  // 현금 + 카드 입력값 상태에 따라 버튼 활성 상태 변경
-  // useEffect(() => {
-  //   if (cashField !== '' && cardField !== '' && kemrPatientEntity) setCashPlusCardButtonActivated(false);
-  //   else setCashPlusCardButtonActivated(true);
-  // }, [cashField, cardField]);
-
   // 진료내역이 변경되면 값 초기화, 진료내역 선택 있으면 버튼 활성화
   useEffect(() => {
     setDefault();
-    // if (id !== undefined) {
-    //   setCashButtonActivated(false);
-    //   setCardButtonActivated(false);
-    // } else {
-    //   setCashButtonActivated(true);
-    //   setCardButtonActivated(true);
-    // }
   }, [id]);
 
   return (
@@ -437,7 +385,7 @@ export const BillPage = () => {
                   type="text"
                   placeholder='휴대폰 번호 입력 ("-" 없이 입력)'
                   disabled={cashPhoneActivated}
-                  onChange={e => setCashPhone(e.target.value)}
+                  onChange={e => setCashPhone(e.target.value.replace(/[^0-9]/g, ''))}
                   value={cashPhone}
                 />
               </Col>
@@ -465,7 +413,7 @@ export const BillPage = () => {
                   type="text"
                   placeholder='휴대폰 번호 입력 ("-" 없이 입력)'
                   disabled={cardCashPhoneActivated}
-                  onChange={e => setCardCashPhone(e.target.value)}
+                  onChange={e => setCardCashPhone(e.target.value.replace(/[^0-9]/g, ''))}
                   value={cardCashPhone}
                 />
               </Col>
@@ -473,78 +421,12 @@ export const BillPage = () => {
           </Card>
         </Col>
       </Row>
-      {/* &nbsp;
-      <Row className="justify-content-center">
-        <Col md="8">
-          <Button color="info" id="entity" data-cy="Button" type="button" disabled={cashButtonActivated} onClick={() => setCashReceiptButton(cashButtonValue)}>
-            {cashButtonValue}
-          </Button>
-          &nbsp;
-          <Button color="info" id="entity" data-cy="Button" type="button" disabled={cashReceiptButtonActivated} onClick={() => setShowReceiptModal(true)}>
-            현금 영수증 발행
-          </Button>
-        </Col>
-      </Row>
       &nbsp;
-      <Row className="justify-content-center">
-        <Col md="8">
-          <Button color="info" id="entity" data-cy="Button" type="button" disabled={cardButtonActivated}>
-            카드
-          </Button>
-        </Col>
-      </Row>
+      <hr />
       &nbsp;
-      <Row className="justify-content-center">
-        <Col md="8">
-          <ValidatedField
-            label="현금"
-            id="kemr-medical-bill-kemrMedicalBillMethod"
-            name="kemrMedicalBillMethod"
-            data-cy="kemrMedicalBillMethod"
-            type="text"
-            validate={{
-              maxLength: { value: 50, message: '최대 50자 이하까지만 입력 가능합니다.' },
-            }}
-            onChange={e => setCashField(e.target.value.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ','))}
-            // 값 넘길 때 value.replace(',', '')
-            value={cashField}
-          />
-          <ValidatedField
-            label="카드"
-            id="kemr-medical-bill-kemrMedicalBillMethod"
-            name="kemrMedicalBillMethod"
-            data-cy="kemrMedicalBillMethod"
-            type="text"
-            validate={{
-              maxLength: { value: 50, message: '최대 50자 이하까지만 입력 가능합니다.' },
-            }}
-            onChange={e => setCardField(e.target.value.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ','))}
-            value={cardField}
-          />
-        </Col>
-      </Row>
-      <Row className="justify-content-center">
-        <Col md="8">
-          <Button id="cancel-write" data-cy="entityWriteCancelButton" color="info" type="button" disabled={cashPlusCardButtonActivated}>
-            <span className="d-none d-md-inline">현금 + 카드</span>
-          </Button>
-        </Col>
-      </Row>
+      {/* 환자 정보 컴포넌트 호출 */}
+      <PatientInfoComponent kemrPatientId={kemrPatientEntity?.id.toString()} />
       &nbsp;
-      <Row className="justify-content-center">
-        <Col md="8">
-          <Button id="cancel-write" data-cy="entityWriteCancelButton" color="danger" type="button" disabled={cancelButtonActivated}>
-            <FontAwesomeIcon icon="cancel" />
-            &nbsp;
-            <span className="d-none d-md-inline">취소</span>
-          </Button>
-          &nbsp;
-          <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="button" disabled={billButtonActivated}>
-            <FontAwesomeIcon icon="save" />
-            &nbsp; 수납
-          </Button>
-        </Col>
-      </Row> */}
       <hr />
       &nbsp;
       <Row className="justify-content-center">
@@ -571,14 +453,6 @@ export const BillPage = () => {
         treatmentWaitingButtonActivated={false}
         billWaitingButtonActivated={true} 
       />
-
-      {/* 현금 영수증 발행 모달 컴포넌트 호출 */}
-      {/* <BillReceiptModal 
-        showModal={showReceiptModal}
-        kemrPatientId={kemrPatientEntity?.id}
-        kemrPatientCellphone={kemrPatientEntity?.kemrPatientCellphone}
-        handleClose={handleClose}
-      /> */}
     </div>
   );
 };

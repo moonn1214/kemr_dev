@@ -61,44 +61,6 @@ export const TreatmentWaitingComponent = (props: ITreatmentWaitingComponentProps
           )}
         </Col>
       </Row>
-      {/* <Row className="justify-content-center">
-        <Col md="8">
-          <div className="table-responsive">
-            {kemrMedicalTreatments && kemrMedicalTreatments.length > 0 ? (
-              <Table responsive>
-                <thead>
-                  <tr>
-                    <th>kemrMedicalTreatment.id</th>
-                    <th>이름</th>
-                    <th>생년월일</th>
-                    <th>성별</th>
-                    <th>환자번호</th>
-                    <th>의사명</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {kemrMedicalTreatments
-                    .filter(
-                      kemrMedicalTreatment => kemrMedicalTreatment.kemrDiagnosis !== null && kemrMedicalTreatment.kemrTreatment === null
-                    )
-                    .map((kemrMedicalTreatment, i) => (
-                      <tr key={`entity-${i}`} data-cy="entityTable">
-                        <td>{kemrMedicalTreatment.id}</td>
-                        <td>{kemrMedicalTreatment.kemrPatient ? kemrMedicalTreatment.kemrPatient.kemrPatientName : ''}</td>
-                        <td>{kemrMedicalTreatment.kemrPatient ? kemrMedicalTreatment.kemrPatient.kemrPatientBirthday : ''}</td>
-                        <td>{kemrMedicalTreatment.kemrPatient ? kemrMedicalTreatment.kemrPatient.kemrPatientSex : ''}</td>
-                        <td>{kemrMedicalTreatment.kemrPatient ? kemrMedicalTreatment.kemrPatient.id : ''}</td>
-                        <td>{kemrMedicalTreatment.kemrDoctor ? kemrMedicalTreatment.kemrDoctor.kemrDoctorName : ''}</td>
-                      </tr>
-                    ))}
-                </tbody>
-              </Table>
-            ) : (
-              !loading && <div className="alert alert-warning">No Kemr Prescriptions found</div>
-            )}
-          </div>
-        </Col>
-      </Row> */}
     </div>
   );
 };

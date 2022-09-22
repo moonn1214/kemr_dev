@@ -24,6 +24,7 @@ export const WaitingComponent = (props: IWaitingProps) => {
   const kemrMedicalTreatments = useAppSelector(state => state.kemrMedicalTreatment.entities);
   const kemrMedicalBills = useAppSelector(state => state.kemrMedicalBill.entities);
 
+  // 만 나이 구하는 메소드
   const getOnlyAge = (birthday) => {
     const today = new Date();
     let age = today.getFullYear() - Number(birthday.slice(0, 4));

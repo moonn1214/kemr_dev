@@ -15,6 +15,7 @@ const OfficeRoutes = () => (
       <Route path="recept" element={<ReceptPage />} />
       <Route path="bill" element={<BillPage />} />
       <Route path=":id">
+        <Route path="recept" element={<ReceptPage />} />
         <Route path="bill" element={<BillPage />} />
       </Route>
     </ErrorBoundaryRoutes>
