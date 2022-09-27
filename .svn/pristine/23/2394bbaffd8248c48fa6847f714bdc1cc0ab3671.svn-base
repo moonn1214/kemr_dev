@@ -19,7 +19,6 @@ import AppRoutes from 'app/routes';
 import Sidebar from './shared/layout/sidebar/sidebar';
 import EntitiesMenuItems from 'app/entities/menu';
 import socketio from 'socket.io';
-import WaitingComponent from './modules/office/waiting/waiting';
 
 const baseHref = document.querySelector('base').getAttribute('href').replace(/\/$/, '');
 
@@ -61,14 +60,6 @@ export const App = () => {
             </ErrorBoundary>
           </Card>
           <Footer />
-        </div>
-        <div className="container-fluid right-side-container" id="app-right-side-container">
-          <Card className="jh-card">
-            <ErrorBoundary>
-              {/* 대기 컴포넌트 호출 */}
-              <WaitingComponent />
-            </ErrorBoundary>
-          </Card>
         </div>
       </div>
     </BrowserRouter>

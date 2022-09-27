@@ -30,69 +30,7 @@ a {
     overflow-x: hidden;
     padding: 0.1rem;
     margin-left: 15%;
-    float: left;  // jkmoon 추가(test 용도)
     
-    .card {
-      padding: 1rem;
-      margin: 1px;
-      
-    }
-    .view-routes {
-      height: 100%;
-      > div {
-        height: 100%;
-      }
-    }
-  }
-  // jkmoon 추가(test 용도)
-  .right-side-container {
-    width: 15%;
-    height: calc(100% - 64px);
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 0.1rem;
-    float: left;
-    .card {
-      padding: 1rem;
-      margin: 1px;
-      
-    }
-    .view-routes {
-      height: 100%;
-      > div {
-        height: 100%;
-      }
-    }
-  }
-  // jkmoon 추가(test 용도)
-  .office-view-container {
-    width: 80%;
-    height: calc(100% - 64px);
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 0.1rem;
-    float: left;
-    
-    .card {
-      padding: 1rem;
-      margin: 1px;
-      
-    }
-    .view-routes {
-      height: 100%;
-      > div {
-        height: 100%;
-      }
-    }
-  }
-  // jkmoon 추가(test 용도)
-  .office-right-side-container {
-    width: 20%;
-    height: calc(100% - 64px);
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 0.1rem;
-    float: left;
     .card {
       padding: 1rem;
       margin: 1px;
