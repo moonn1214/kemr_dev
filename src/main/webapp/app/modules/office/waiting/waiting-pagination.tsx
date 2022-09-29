@@ -48,7 +48,7 @@ export const WaitingPaginationComponent = (props: IWaitingPaginationComponentPro
 
   // 선택한 페이지에 대해 표시할 페이지네이션 렌더링 메소드
   const renderPaginationArray = () => {
-    // 페이지 번호의 시작 인덱스부터 (시작 쪽수 인덱스 + 한번에 표시 가능한 쪽수 - 1) 만큼 루프
+    // 페이지 번호의 시작 인덱스부터 (페이지 번호 시작 인덱스 + 한번에 표시 가능한 최대 페이지 번호 - 1) 만큼 루프
     for (let i = paginationStartIndex; i <= (paginationStartIndex + (maxPaginationNo - 1)); i++) {
       paginationArray.push(
         activatedPagination === i ? (
