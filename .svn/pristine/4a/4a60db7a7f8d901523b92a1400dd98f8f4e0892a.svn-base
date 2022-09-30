@@ -16,7 +16,6 @@ import ReceptCancelModal from './recept-cancel-modal';
 import PatientInfoComponent from '../patient-info/patient-info';
 // 날짜 유효성 체크를 위해 추가한 라이브러리 (npm install moment --save)
 import moment from 'moment';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const ReceptPage = () => {
   const dispatch = useAppDispatch();
@@ -228,8 +227,7 @@ export const ReceptPage = () => {
                       type="button"
                       onClick={checkQualification}
                     >
-                       <FontAwesomeIcon icon="sync" />&nbsp;
-                       <span className="d-none d-md-inline">조회</span>
+                      <span className="d-none d-md-inline">조회</span>
                     </Button>
                     &nbsp;
                     {resultQualification}

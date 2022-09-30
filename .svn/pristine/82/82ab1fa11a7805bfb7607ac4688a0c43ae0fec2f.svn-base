@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!--
+        Added the field constraints for entity KemrPatient.
+    -->
+    <changeSet id="20220930030230-fields-constraints" author="jhipster">
+        <addNotNullConstraint tableName="kemr_patient"
+            columnName="kemr_patient_social_security_no"
+            columnDataType="varchar(20)"/>
+    </changeSet>
+</databaseChangeLog>

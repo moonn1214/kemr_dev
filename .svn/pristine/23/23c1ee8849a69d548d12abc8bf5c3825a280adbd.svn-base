@@ -3,7 +3,7 @@
  * 원무 대기 컴포넌트
  */
 import React, {  useEffect, useState } from 'react';
-import { Button, ButtonGroup, Badge, Row, Col } from 'reactstrap';
+import { Button, ButtonGroup, Badge } from 'reactstrap';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getEntities as getKemrMedicalTreatments } from 'app/entities/kemr-medical-treatment/kemr-medical-treatment.reducer';
 import { getEntities as getKemrMedicalBills } from 'app/entities/kemr-medical-bill/kemr-medical-bill.reducer';
@@ -11,7 +11,6 @@ import DiagnosisWaitingComponent from './diagnosis-waiting';
 import TreatmentWaitingComponent from './treatment-waiting';
 import BillWaitingComponent from './bill-waiting';
 import { useLocation } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const WaitingComponent = () => {
   const dispatch = useAppDispatch();
@@ -22,10 +21,7 @@ export const WaitingComponent = () => {
 
   const kemrMedicalTreatments = useAppSelector(state => state.kemrMedicalTreatment.entities);
   const kemrMedicalBills = useAppSelector(state => state.kemrMedicalBill.entities);
-  const medicalTreatmentsLoading = useAppSelector(state => state.kemrMedicalTreatment.loading);
-  const medicalBillsLoading = useAppSelector(state => state.kemrMedicalBill.loading);
 
-  // 만 나이 구하는 메소드
   const getOnlyAge = (socialSecurityNo) => {
     const no = socialSecurityNo.replace(/[^0-9]/g, "");
     let birthday = null;
@@ -45,11 +41,6 @@ export const WaitingComponent = () => {
     }
     return age.toString();
   }
-
-  // 항목 새로고침 메소드
-  const refreshList = () => {
-    dispatch(getKemrMedicalTreatments({}));
-  };
 
   useEffect(() => {
     dispatch(getKemrMedicalTreatments({}));
@@ -123,57 +114,27 @@ export const WaitingComponent = () => {
     <div>
       <div className="justify-content-center d-flex">
         <ButtonGroup size="sm">
-          {kemrDiagnosisWaitingNo ? (
-            <Button 
-              outline color="primary"
-              onClick={() => setWaitingState({...waitingState, mode: 'diagnosisWaiting'})} 
-              active={waitingState.mode === 'diagnosisWaiting'}
-            >
-              진료대기&nbsp;<Badge color="danger" pill>{kemrDiagnosisWaitingNo}</Badge>
-            </Button>
-          ) : (
-            <Button 
-              outline color="primary"
-              onClick={() => setWaitingState({...waitingState, mode: 'diagnosisWaiting'})} 
-              disabled
-            >
-              진료대기&nbsp;<Badge color="secondary" pill>{kemrDiagnosisWaitingNo}</Badge>
-            </Button>
-          )}
-          {kemrTreatmentWaitingNo ? (
-            <Button 
-              outline color="primary"
-              onClick={() => setWaitingState({...waitingState, mode: 'treatmentWaiting'})} 
-              active={waitingState.mode === 'treatmentWaiting'}
-            >
-              치료대기&nbsp;<Badge color="danger" pill>{kemrTreatmentWaitingNo}</Badge>
-            </Button>
-          ) : (
-            <Button 
-              outline color="primary"
-              onClick={() => setWaitingState({...waitingState, mode: 'treatmentWaiting'})} 
-              disabled
-            >
-              치료대기&nbsp;<Badge color="secondary" pill>{kemrTreatmentWaitingNo}</Badge>
-            </Button>
-          )}
-          {kemrBillWaitingNo ? (
-            <Button 
-              outline color="primary"
-              onClick={() => setWaitingState({...waitingState, mode: 'billWaiting'})} 
-              active={waitingState.mode === 'billWaiting'}
-            >
-              수납대기&nbsp;<Badge color="danger" pill>{kemrBillWaitingNo}</Badge>
-            </Button>
-          ) : (
-            <Button 
-              outline color="primary"
-              onClick={() => setWaitingState({...waitingState, mode: 'billWaiting'})} 
-              disabled
-            >
-              수납대기&nbsp;<Badge color="secondary" pill>{kemrBillWaitingNo}</Badge>
-            </Button>
-          )}
+          <Button 
+            outline color="primary"
+            onClick={() => setWaitingState({...waitingState, mode: 'diagnosisWaiting'})} 
+            active={waitingState.mode === 'diagnosisWaiting'}
+          >
+            진료대기&nbsp;<Badge color="danger" pill>{kemrDiagnosisWaitingNo}</Badge>
+          </Button>
+          <Button 
+            outline color="primary"
+            onClick={() => setWaitingState({...waitingState, mode: 'treatmentWaiting'})} 
+            active={waitingState.mode === 'treatmentWaiting'}
+          >
+            치료대기&nbsp;<Badge color="danger" pill>{kemrTreatmentWaitingNo}</Badge>
+          </Button>
+          <Button 
+            outline color="primary"
+            onClick={() => setWaitingState({...waitingState, mode: 'billWaiting'})} 
+            active={waitingState.mode === 'billWaiting'}
+          >
+            수납대기&nbsp;<Badge color="danger" pill>{kemrBillWaitingNo}</Badge>
+          </Button>
         </ButtonGroup>
       </div>
       &nbsp;
@@ -181,12 +142,6 @@ export const WaitingComponent = () => {
       {waitingState.mode === 'diagnosisWaiting' && <DiagnosisWaitingComponent getOnlyAge={getOnlyAge} />}
       {waitingState.mode === 'treatmentWaiting' && <TreatmentWaitingComponent getOnlyAge={getOnlyAge} />}
       {waitingState.mode === 'billWaiting' && <BillWaitingComponent getOnlyAge={getOnlyAge} />}
-      {/* 항목 새로고침(필요한지, 위치는 어디) */}
-      <Row className="justify-content-center">
-        <Col md="12">
-          <FontAwesomeIcon icon="sync" type="button" onClick={refreshList} spin={medicalTreatmentsLoading || medicalBillsLoading} />
-        </Col>
-      </Row>
     </div>
   );
 };

@@ -49,7 +49,6 @@ const ReceptModal = (props: IReceptModalProps) => {
         id: Number(props.kemrPatientId),
         kemrPatientName: props.kemrPatientName,
         kemrPatientSex: getPatientSex(kemrPatientSocialSecurityNo),
-        // (수정)생일 삭제되면 삭제
         kemrPatientBirthday: getPatientBirthday(kemrPatientSocialSecurityNo),
         kemrPatientRegistrationDate: kemrPatient.kemrPatientRegistrationDate,
         kemrPatientSocialSecurityNo: kemrPatientSocialSecurityNo.substring(0, 6) + "-" + kemrPatientSocialSecurityNo.substring(6),
@@ -79,7 +78,6 @@ const ReceptModal = (props: IReceptModalProps) => {
     const patientEntity = {
       kemrPatientName: props.kemrPatientName,
       kemrPatientSex: getPatientSex(props.kemrPatientSocialSecurityNo),
-      // (수정)생일 삭제되면 삭제
       kemrPatientBirthday: getPatientBirthday(props.kemrPatientSocialSecurityNo),
       kemrPatientRegistrationDate: new Date().toISOString().replace(/\..*/, '') + 'Z',
       kemrPatientSocialSecurityNo: props.kemrPatientSocialSecurityNo.substring(0, 6) + "-" + props.kemrPatientSocialSecurityNo.substring(6),
@@ -98,7 +96,6 @@ const ReceptModal = (props: IReceptModalProps) => {
     return "F";
   };
 
-  // (수정)생일 삭제되면 삭제
   // 주민등록번호를 생년월일로 변환
   const getPatientBirthday = (no) => {
     if (no.substr(6, 1) === "1" || no.substr(6, 1) === "2") {

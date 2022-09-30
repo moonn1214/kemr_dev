@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added columns to the entity KemrPatient.
+    -->
+    <changeSet id="20220930030230-1-add-columns" author="jhipster">
+        <addColumn tableName="kemr_patient">
+            <column name="kemr_patient_social_security_no" type="varchar(20)"/>
+        </addColumn>
+    </changeSet>
+
+    <!--
+        Dropped columns to the entity KemrPatient.
+    -->
+    <changeSet id="20220930030230-1-drop-columns" author="jhipster">
+        <dropColumn tableName="kemr_patient">
+            <column name="kemr_patient_social_seurity_no"/>
+        </dropColumn>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+
+</databaseChangeLog>

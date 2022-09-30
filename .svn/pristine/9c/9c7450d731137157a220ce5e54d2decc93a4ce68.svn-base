@@ -14,7 +14,7 @@ export const WaitingPaginationComponent = (props: IWaitingPaginationComponentPro
   const [activatedPagination, setActivatedPagination] = useState(1);
   
   // 페이지 1개 당 최대 항목 수 (5가 적절해보임, 메인 영역 레이아웃 높이에 맞춰서 설정)
-  const maxItemNo = 5;
+  const maxItemNo = 2;
   // 페이지마다 표시할 항목 리스트의 시작 인덱스 (0, 1, 2 ...)
   const itemStartIndex = maxItemNo * (activatedPagination - 1);
   // 페이지 1개 당 표시되는 항목 배열

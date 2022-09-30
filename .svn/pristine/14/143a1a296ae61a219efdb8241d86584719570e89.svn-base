@@ -27,16 +27,6 @@ export const PatientInfoComponent = (props: IPatientInfoComponentProps) => {
   // 최근 방문일, 최근 진료 정보 상태
   const [lastVisitDate, setLastVisitDate] = useState('');
   const [lastDoctor, setLastDoctor] = useState('');
-
-  const getBirthday = (socialSecurityNo) => {
-    const no = socialSecurityNo.replace(/[^0-9]/g, "");
-    
-    if (no.substr(6, 1) === "1" || no.substr(6, 1) === "2") {
-      return "19" + no.substring(0, 2) + no.substring(2, 4) + no.substring(4, 6);
-    } else {
-      return "20" + no.substring(0, 2) + no.substring(2, 4) + no.substring(4, 6);
-    }
-  };
   
   useEffect(() => {
     dispatch(reset());
@@ -111,8 +101,8 @@ export const PatientInfoComponent = (props: IPatientInfoComponentProps) => {
                   <span id="kemrPatientBirthday">생년월일</span>
                 </dt>
                 <dd>
-                  {propsId !== undefined && kemrPatientEntity.kemrPatientSocialSecurityNo ? (
-                    <TextFormat value={getBirthday(kemrPatientEntity.kemrPatientSocialSecurityNo)} type="date" format={APP_KR_DATE_FORMAT} />
+                  {propsId !== undefined && kemrPatientEntity.kemrPatientBirthday ? (
+                    <TextFormat value={kemrPatientEntity.kemrPatientBirthday} type="date" format={APP_KR_DATE_FORMAT} />
                   ) : null}</dd>
                 <dt>
                   <span id="kemrPatientName">성별</span>
