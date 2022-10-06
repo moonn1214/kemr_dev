@@ -33,7 +33,7 @@ export const WaitingComponent = () => {
     if (no.substr(6, 1) === "1" || no.substr(6, 1) === "2") {
       birthday = "19" + no.substring(0, 2) + no.substring(2, 4) + no.substring(4, 6);
     } else {
-      birthday =  "20" + no.substring(0, 2) + no.substring(2, 4) + no.substring(4, 6);
+      birthday = "20" + no.substring(0, 2) + no.substring(2, 4) + no.substring(4, 6);
     }
 
     const today = new Date();

@@ -25,7 +25,7 @@ export interface IReceptModalProps {
   handleClose: () => void;
 }
 
-const ReceptModal = (props: IReceptModalProps) => {
+export const ReceptModal = (props: IReceptModalProps) => {
   const dispatch = useAppDispatch();
 
   const kemrPatients = useAppSelector(state => state.kemrPatient.entities);
